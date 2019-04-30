@@ -1,7 +1,5 @@
-FROM archlinux/base
-RUN yes | pacman -Syyuu
-RUN yes | pacman -S python python-flask gunicorn sqlite
+FROM python:3-alpine
 COPY . /app
 WORKDIR /app
-CMD [ "/usr/bin/gunicorn", "-b", "0.0.0.0:8000", "--workers=4", "schnupf:app" ]
-
+RUN pip3 install flask gunicorn
+CMD [ "gunicorn", "-b", "0.0.0.0:8000", "--workers=4", "schnupf:app" ]
