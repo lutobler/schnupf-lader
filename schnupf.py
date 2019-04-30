@@ -237,7 +237,7 @@ def schnupf_main():
                     <hr />
                     <br>
                     <p style="text-align: center;">
-                    <a style="color: #1967e5" href=".">Neue Spruch</a>
+                    <a style="color: #1967e5" href="./schnupf">Neue Spruch</a>
                     <br>
                     <small>&copy; Tobi Müller</small>
                     </p>
