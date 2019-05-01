@@ -15,7 +15,7 @@ c.execute("""
             id INTEGER PRIMARY KEY AUTOINCREMENT,
             titel TEXT,
             inhalt TEXT,
-            schnupfzaehler TEXT
+            schnupfzaehler INTEGER
         );""")
 conn.commit()
 
