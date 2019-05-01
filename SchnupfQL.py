@@ -14,7 +14,8 @@ c.execute("""
         CREATE TABLE spruechli (
             id INTEGER PRIMARY KEY AUTOINCREMENT,
             titel TEXT,
-            inhalt TEXT
+            inhalt TEXT,
+            schnupfzaehler TEXT
         );""")
 conn.commit()
 
@@ -29,8 +30,8 @@ for i in range(1, 110):
         content = s.text
         title = s.parent.parent.previous_sibling.previous_sibling.td.b.text
         c.execute(f"""
-            INSERT INTO spruechli (titel, inhalt)
-            VALUES ("{title}", "{content}");""")            
+            INSERT INTO spruechli (titel, inhalt, schnupfzaehler)
+            VALUES ("{title}", "{content}", 0);""")            
     conn.commit()
     
 conn.close()
