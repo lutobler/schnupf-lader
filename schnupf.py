@@ -127,7 +127,7 @@ def schnupf_main(id2_=None, bgid=None):
                         <small>&copy; Tobi Müller</small>
                     </div>
                     <div style="width: 50%; float: right; text-align: right;">
-                        <a href="javascript:var r = new XMLHttpRequest(); r.open('GET', '/priis/{id_}', false); r.send(null); window.location='/{id_}/{s}'" style="text-decoration: none;">
+                        <a href="javascript:var r = new XMLHttpRequest(); r.open('GET', '/schnupf/priis/{id_}', false); r.send(null); window.location='/schnupf/{id_}/{s}'" style="text-decoration: none;">
                             <span style="font-size: 2em;vertical-align:middle;margin-right: 5px;">priis</span>
                             <img src="data:image/png;base64,{nase}" style="max-height: 2em;vertical-align: middle;" />
                         </a>
