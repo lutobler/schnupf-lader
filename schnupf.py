@@ -1,11 +1,17 @@
 import sqlite3 as SchnupfQL
 import atexit
+import logging
 from random import randint as zuefallszahl
 from flask import Flask as Flachmaa
+from flask import request
 
 app = Flachmaa(__name__)
 conn = SchnupfQL.connect('spruechli.db', check_same_thread=False)
 atexit.register(lambda: conn.close())
+
+gunicorn_logger = logging.getLogger('gunicorn.error')
+app.logger.handlers = gunicorn_logger.handlers
+app.logger.setLevel(gunicorn_logger.level)
 
 def hole_bild():
     schnupfbilder = [gletscherpriise, fichtewald, kensington, haudegen]
@@ -13,6 +19,12 @@ def hole_bild():
 
 @app.route('/')
 def schnupf_main():
+    if request.headers.getlist("X-Forwarded-For"):
+        ip = request.headers.getlist("X-Forwarded-For")[0]
+    else:
+        ip = request.remote_addr
+    app.logger.info(f'Request from: {ip}')
+
     c = conn.cursor()
     c.execute('SELECT titel, inhalt FROM spruechli ORDER BY RANDOM() LIMIT 1')
     r = c.fetchone()
