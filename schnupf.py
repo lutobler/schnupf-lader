@@ -17,6 +17,8 @@ app.logger.setLevel(gunicorn_logger.level)
 def hole_bild(bgid=None):
     schnupfbilder = [gletscherpriise, fichtewald, kensington, haudegen]
     if bgid:
+        if bgid < 0 or bgid >= len(schnupfbilder):
+            return (None, None)
         return (schnupfbilder[bgid], bgid)
     i = zuefallszahl(0, len(schnupfbilder) - 1)
     return (schnupfbilder[i], i)
@@ -40,6 +42,26 @@ def schnupf_priis(id_):
     conn.commit()
     return 'priis'
 
+def websiite_stoerig():
+    return f"""
+        <!DOCTYPE html>
+        <html>
+            <head>
+                <title>Websiite Störung!</title>
+            </head>
+            <body>
+                <marquee>
+                    <h1>
+                        <em><font color="red">Websiite Störung!&nbsp;&nbsp;</font></em>
+                        Du hesch en falsche Link igeh du <em>Löli!</em>&nbsp;&nbsp;
+                        <em><font color="red">Websiite Störung!</font></em>
+                    </h1>
+                </marquee>
+            </body>
+        </html> 
+        """
+
+
 @app.route('/<int:id2_>/<int:bgid>')
 @app.route('/')
 def schnupf_main(id2_=None, bgid=None):
@@ -57,12 +79,18 @@ def schnupf_main(id2_=None, bgid=None):
                 FROM spruechli ORDER BY RANDOM() LIMIT 1;
                 """)
     r = c.fetchone()
+    if not r:
+        return websiite_stoerig()
+
     titel = r[0].replace('\n', '<br>')
     spruch = r[1].replace('\n', '<br>')
     id_ = int(r[2])
     priis_zaehler = int(r[3])
     conn.commit()
     bild, s = hole_bild(bgid)
+    if not bild:
+        return websiite_stoerig()
+
     return f"""
         <!DOCTYPE html>
         <html>
