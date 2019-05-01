@@ -4,3 +4,7 @@ services:
     build:
       context: .
       network: host
+    container_name: schnupf-dock
+    ports:
+      - "8001:8000"
+    restart: always
