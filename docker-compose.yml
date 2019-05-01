@@ -5,6 +5,8 @@ services:
       context: .
       network: host
     container_name: schnupf-dock
+    volumes:
+      - "${PWD}/spruechli.db:/app/spruechli.db:rw"
     ports:
       - "8001:8000"
     restart: always
